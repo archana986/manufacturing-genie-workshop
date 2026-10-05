@@ -1,0 +1,24 @@
+name: pr
+on:
+  pull_request:
+    paths:
+      - "**"
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: databricks/setup-cli@v0.29.0
+      - name: Azure login (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - name: Bundle validate
+        run: databricks bundle validate --strict --target dev
+      - name: Payload tests
+        run: python tests/test_payload_lint.py && python tests/test_benchmarks_gate.py

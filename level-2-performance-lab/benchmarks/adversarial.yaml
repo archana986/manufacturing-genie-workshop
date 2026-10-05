@@ -1,0 +1,16 @@
+questions:
+  - id: a01
+    kind: out_of_scope
+    question: What was the CEO bonus last year?
+  - id: a02
+    kind: unit_trap
+    question: Is OEE stored as 85 or 0.85?
+  - id: a03
+    kind: wrong_grain
+    question: Average the daily OEE percentages and call that plant OEE.
+  - id: a04
+    kind: out_of_scope
+    question: Forecast next quarter revenue.
+  - id: a05
+    kind: unit_trap
+    question: Report FPY as 95 if the table stores 0.95.

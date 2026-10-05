@@ -1,0 +1,32 @@
+resources:
+  jobs:
+    deploy_metric_views:
+      name: apex-deploy-metric-views
+      tasks:
+        - task_key: deploy_mv
+          notebook_task:
+            notebook_path: ./src/notebooks/deploy_metric_views.ipynb
+      parameters:
+        - name: catalog
+          default: ${var.catalog}
+        - name: schema
+          default: ${var.schema}
+        - name: warehouse_id
+          default: ${var.warehouse_id}
+
+    accuracy_alert:
+      name: apex-accuracy-alert
+      schedule:
+        quartz_cron_expression: "0 0 8 * * ?"
+        timezone_id: UTC
+      tasks:
+        - task_key: check_accuracy
+          notebook_task:
+            notebook_path: ./src/notebooks/accuracy_alert.ipynb
+      parameters:
+        - name: catalog
+          default: ${var.catalog}
+        - name: schema
+          default: ${var.schema}
+        - name: warehouse_id
+          default: ${var.warehouse_id}

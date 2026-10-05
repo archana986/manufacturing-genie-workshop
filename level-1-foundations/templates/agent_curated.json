@@ -1,0 +1,134 @@
+{
+  "title": "Apex L1 Curated",
+  "description": "Curated Apex Precision Manufacturing quality agent. OEE and FPY are 0 to 1. Scrap rate is a ratio, never a date.",
+  "table_identifiers": [
+    "${catalog}.${schema}.plants",
+    "${catalog}.${schema}.production_lines",
+    "${catalog}.${schema}.operators",
+    "${catalog}.${schema}.production_events",
+    "${catalog}.${schema}.quality_metrics_daily",
+    "${catalog}.${schema}.safety_incidents",
+    "${catalog}.${schema}.equipment_feedback"
+  ],
+  "text_instructions": "Business context: Apex Precision Manufacturing runs six plants across automotive components, industrial pumps, and electronics assembly.\n\nScale rules:\n- quality_metrics_daily.oee_score and first_pass_yield are stored on a 0 to 1 scale. Multiply by 100 when the user asks for percent.\n- Scrap rate is always 100 * scrap_count / units_produced (or event counts). Never return a year or a date for scrap rate.\n- production_lines.status is static (Active or Maintenance). Do not add date filters when asked which lines are in Maintenance.\n\nJoins:\n- production_events.production_line_id = production_lines.line_id\n- production_lines.plant_id = plants.plant_id\n- production_events.operator_id = operators.operator_id\n- quality_metrics_daily.production_line_id = production_lines.line_id\n\nQuality:\n- Best quality shift = lowest defect_detected rate after joining operators.shift.\n- HIGH_PERFORMING_LINE: OEE >= 0.85 AND first_pass_yield >= 0.95.\n- AT_RISK_LINE: OEE < 0.70 OR defect rate > 5%.\n\nUse fully qualified table names ${catalog}.${schema}.table_name. Filter event_type with exact match.",
+  "sample_questions": [
+    "What is the scrap rate for yesterday?",
+    "Which shift has the best quality?",
+    "Which plants have a Maintenance line?",
+    "What is average OEE by plant as a percent?"
+  ],
+  "example_question_sqls": [
+    {
+      "id": "l1-ex-01",
+      "question": ["How many plants are in the Apex network?"],
+      "sql": ["SELECT COUNT(*) AS plant_count FROM ${catalog}.${schema}.plants"]
+    },
+    {
+      "id": "l1-ex-02",
+      "question": ["What is average OEE by plant as a percent?"],
+      "sql": ["SELECT p.plant_name, ROUND(AVG(q.oee_score) * 100, 2) AS avg_oee_pct FROM ${catalog}.${schema}.quality_metrics_daily q JOIN ${catalog}.${schema}.plants p ON q.plant_id = p.plant_id GROUP BY p.plant_name ORDER BY avg_oee_pct DESC"]
+    },
+    {
+      "id": "l1-ex-03",
+      "question": ["What is the scrap rate from daily quality metrics?"],
+      "sql": ["SELECT ROUND(100.0 * SUM(q.scrap_count) / NULLIF(SUM(q.units_produced), 0), 2) AS scrap_rate_pct FROM ${catalog}.${schema}.quality_metrics_daily q"]
+    },
+    {
+      "id": "l1-ex-04",
+      "question": ["Which shift has the best quality?"],
+      "sql": ["SELECT o.shift, ROUND(SUM(CASE WHEN pe.event_type = 'defect_detected' THEN 1 ELSE 0 END) * 100.0 / NULLIF(SUM(CASE WHEN pe.event_type = 'unit_produced' THEN 1 ELSE 0 END), 0), 2) AS defect_rate_pct FROM ${catalog}.${schema}.production_events pe JOIN ${catalog}.${schema}.operators o ON pe.operator_id = o.operator_id GROUP BY o.shift ORDER BY defect_rate_pct ASC"]
+    },
+    {
+      "id": "l1-ex-05",
+      "question": ["Which plants have production lines in Maintenance?"],
+      "sql": ["SELECT DISTINCT p.plant_name FROM ${catalog}.${schema}.production_lines pl JOIN ${catalog}.${schema}.plants p ON pl.plant_id = p.plant_id WHERE pl.status = 'Maintenance'"]
+    },
+    {
+      "id": "l1-ex-06",
+      "question": ["How many defect events occurred per shift?"],
+      "sql": ["SELECT o.shift, COUNT(*) AS defect_count FROM ${catalog}.${schema}.production_events pe JOIN ${catalog}.${schema}.operators o ON pe.operator_id = o.operator_id WHERE pe.event_type = 'defect_detected' GROUP BY o.shift ORDER BY defect_count"]
+    },
+    {
+      "id": "l1-ex-07",
+      "question": ["What are the top defect codes?"],
+      "sql": ["SELECT defect_code, COUNT(*) AS defect_count FROM ${catalog}.${schema}.production_events WHERE defect_code IS NOT NULL GROUP BY defect_code ORDER BY defect_count DESC LIMIT 20"]
+    },
+    {
+      "id": "l1-ex-08",
+      "question": ["Compare downtime minutes across plants"],
+      "sql": ["SELECT p.plant_name, ROUND(SUM(q.downtime_minutes), 2) AS total_downtime_minutes FROM ${catalog}.${schema}.quality_metrics_daily q JOIN ${catalog}.${schema}.plants p ON q.plant_id = p.plant_id GROUP BY p.plant_name ORDER BY total_downtime_minutes DESC"]
+    },
+    {
+      "id": "l1-ex-09",
+      "question": ["List critical safety incidents"],
+      "sql": ["SELECT incident_id, incident_date, production_line_id, description FROM ${catalog}.${schema}.safety_incidents WHERE severity = 'Critical' ORDER BY incident_date DESC"]
+    },
+    {
+      "id": "l1-ex-10",
+      "question": ["What is scrap rate by product type?"],
+      "sql": ["SELECT pl.product_type, ROUND(SUM(CASE WHEN pe.event_type = 'scrap' THEN 1 ELSE 0 END) * 100.0 / NULLIF(SUM(CASE WHEN pe.event_type = 'unit_produced' THEN 1 ELSE 0 END), 0), 2) AS scrap_rate_pct FROM ${catalog}.${schema}.production_events pe JOIN ${catalog}.${schema}.production_lines pl ON pe.production_line_id = pl.line_id GROUP BY pl.product_type ORDER BY scrap_rate_pct DESC"]
+    },
+    {
+      "id": "l1-ex-11",
+      "question": ["Which lines are high performing?"],
+      "sql": ["SELECT pl.line_name, ROUND(AVG(q.oee_score), 4) AS avg_oee, ROUND(AVG(q.first_pass_yield), 4) AS avg_fpy FROM ${catalog}.${schema}.quality_metrics_daily q JOIN ${catalog}.${schema}.production_lines pl ON q.production_line_id = pl.line_id GROUP BY pl.line_name HAVING AVG(q.oee_score) >= 0.85 AND AVG(q.first_pass_yield) >= 0.95"]
+    },
+    {
+      "id": "l1-ex-12",
+      "question": ["How many production events occurred yesterday?"],
+      "sql": ["SELECT COUNT(*) AS event_count FROM ${catalog}.${schema}.production_events WHERE event_date = date_sub(current_date(), 1)"]
+    }
+  ],
+  "benchmarks": [
+    {
+      "id": "l1-b-01",
+      "question": ["How many plants are in the Apex network?"],
+      "sql": ["SELECT COUNT(*) AS plant_count FROM ${catalog}.${schema}.plants"]
+    },
+    {
+      "id": "l1-b-02",
+      "question": ["What is average OEE by plant as a percent?"],
+      "sql": ["SELECT p.plant_name, ROUND(AVG(q.oee_score) * 100, 2) AS avg_oee_pct FROM ${catalog}.${schema}.quality_metrics_daily q JOIN ${catalog}.${schema}.plants p ON q.plant_id = p.plant_id GROUP BY p.plant_name ORDER BY avg_oee_pct DESC"]
+    },
+    {
+      "id": "l1-b-03",
+      "question": ["What is the overall scrap rate from daily quality metrics?"],
+      "sql": ["SELECT ROUND(100.0 * SUM(q.scrap_count) / NULLIF(SUM(q.units_produced), 0), 2) AS scrap_rate_pct FROM ${catalog}.${schema}.quality_metrics_daily q"]
+    },
+    {
+      "id": "l1-b-04",
+      "question": ["Which shift has the lowest defect rate?"],
+      "sql": ["SELECT o.shift, ROUND(SUM(CASE WHEN pe.event_type = 'defect_detected' THEN 1 ELSE 0 END) * 100.0 / NULLIF(SUM(CASE WHEN pe.event_type = 'unit_produced' THEN 1 ELSE 0 END), 0), 2) AS defect_rate_pct FROM ${catalog}.${schema}.production_events pe JOIN ${catalog}.${schema}.operators o ON pe.operator_id = o.operator_id GROUP BY o.shift ORDER BY defect_rate_pct ASC"]
+    },
+    {
+      "id": "l1-b-05",
+      "question": ["Which plants have a Maintenance line?"],
+      "sql": ["SELECT DISTINCT p.plant_name FROM ${catalog}.${schema}.production_lines pl JOIN ${catalog}.${schema}.plants p ON pl.plant_id = p.plant_id WHERE pl.status = 'Maintenance' ORDER BY p.plant_name"]
+    },
+    {
+      "id": "l1-b-06",
+      "question": ["How many defect events occurred per shift?"],
+      "sql": ["SELECT o.shift, COUNT(*) AS defect_count FROM ${catalog}.${schema}.production_events pe JOIN ${catalog}.${schema}.operators o ON pe.operator_id = o.operator_id WHERE pe.event_type = 'defect_detected' GROUP BY o.shift ORDER BY o.shift"]
+    },
+    {
+      "id": "l1-b-07",
+      "question": ["What are the top 5 defect codes?"],
+      "sql": ["SELECT defect_code, COUNT(*) AS defect_count FROM ${catalog}.${schema}.production_events WHERE defect_code IS NOT NULL GROUP BY defect_code ORDER BY defect_count DESC, defect_code LIMIT 5"]
+    },
+    {
+      "id": "l1-b-08",
+      "question": ["Which plant has the most downtime minutes?"],
+      "sql": ["SELECT p.plant_name, ROUND(SUM(q.downtime_minutes), 2) AS total_downtime_minutes FROM ${catalog}.${schema}.quality_metrics_daily q JOIN ${catalog}.${schema}.plants p ON q.plant_id = p.plant_id GROUP BY p.plant_name ORDER BY total_downtime_minutes DESC LIMIT 1"]
+    },
+    {
+      "id": "l1-b-09",
+      "question": ["How many critical safety incidents are recorded?"],
+      "sql": ["SELECT COUNT(*) AS critical_count FROM ${catalog}.${schema}.safety_incidents WHERE severity = 'Critical'"]
+    },
+    {
+      "id": "l1-b-10",
+      "question": ["What is scrap rate by product type from production events?"],
+      "sql": ["SELECT pl.product_type, ROUND(SUM(CASE WHEN pe.event_type = 'scrap' THEN 1 ELSE 0 END) * 100.0 / NULLIF(SUM(CASE WHEN pe.event_type = 'unit_produced' THEN 1 ELSE 0 END), 0), 2) AS scrap_rate_pct FROM ${catalog}.${schema}.production_events pe JOIN ${catalog}.${schema}.production_lines pl ON pe.production_line_id = pl.line_id GROUP BY pl.product_type ORDER BY pl.product_type"]
+    }
+  ]
+}

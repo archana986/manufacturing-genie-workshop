@@ -1,0 +1,11 @@
+resources:
+  genie_spaces:
+    apex_l2b:
+      title: "Apex L2 B (metric views) [${bundle.target}]"
+      description: Production-shaped Apex agent using metric views.
+      warehouse_id: ${var.warehouse_id}
+      parent_path: ${var.parent_path}
+      file_path: ./src/genie/apex_l2b.geniespace.json
+      permissions:
+        - level: CAN_MANAGE
+          user_name: ${workspace.current_user.userName}

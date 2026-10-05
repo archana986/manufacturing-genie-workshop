@@ -1,0 +1,18 @@
+{
+  "title": "Apex L1 Blank",
+  "description": "Starter Apex Precision Manufacturing agent with tables only. No instructions yet.",
+  "table_identifiers": [
+    "${catalog}.${schema}.plants",
+    "${catalog}.${schema}.production_lines",
+    "${catalog}.${schema}.operators",
+    "${catalog}.${schema}.production_events",
+    "${catalog}.${schema}.quality_metrics_daily",
+    "${catalog}.${schema}.safety_incidents",
+    "${catalog}.${schema}.equipment_feedback"
+  ],
+  "sample_questions": [
+    "How many plants are in the network?",
+    "What is average OEE by plant?",
+    "Which lines are in Maintenance?"
+  ]
+}

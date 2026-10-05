@@ -1,0 +1,10 @@
+resources:
+  pipelines:
+    apex_gold:
+      name: apex-gold-${bundle.target}
+      catalog: ${var.catalog}
+      target: ${var.schema}
+      serverless: true
+      libraries:
+        - notebook:
+            path: ./src/pipelines/gold.py
