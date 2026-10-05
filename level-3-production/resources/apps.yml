@@ -1,0 +1,6 @@
+resources:
+  apps:
+    apex_genie_lab:
+      name: "apex-genie-lab-${bundle.target}"
+      source_code_path: ./src/app
+      description: Ask + Test Lab for the Apex Genie agent

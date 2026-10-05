@@ -1,0 +1,41 @@
+{
+  "version": 2,
+  "instructions": {
+    "text_instructions": [
+      {
+        "id": "l3-text-01",
+        "content": [
+          "Prefer MEASURE() on metric views. OEE is a 0 to 1 ratio of sums. Never average daily OEE percentages. FPY is good_units / units. Scrap rate is a ratio, never a date."
+        ]
+      }
+    ],
+    "example_question_sqls": [
+      {
+        "id": "l3-ex-01",
+        "question": ["What is overall OEE?"],
+        "sql": ["SELECT MEASURE(`oee`) AS oee FROM ${catalog}.${schema}.mv_line_performance"]
+      }
+    ]
+  },
+  "data_sources": {
+    "tables": [
+      {"identifier": "${catalog}.${schema}.mv_line_performance"},
+      {"identifier": "${catalog}.${schema}.mv_quality"},
+      {"identifier": "${catalog}.${schema}.mv_maintenance"}
+    ]
+  },
+  "benchmarks": {
+    "questions": [
+      {
+        "id": "l3-b-01",
+        "question": ["What is overall OEE?"],
+        "answer": [
+          {
+            "format": "SQL",
+            "content": ["SELECT MEASURE(`oee`) AS oee FROM ${catalog}.${schema}.mv_line_performance"]
+          }
+        ]
+      }
+    ]
+  }
+}

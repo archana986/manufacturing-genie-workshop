@@ -1,0 +1,19 @@
+questions:
+  - id: p01
+    source: g01
+    question: Tell me the overall equipment effectiveness.
+  - id: p02
+    source: g01
+    question: What is OEE across all lines?
+  - id: p03
+    source: g01
+    question: Give me plant-wide OEE as a ratio of sums.
+  - id: p04
+    source: g12
+    question: What share of units were good?
+  - id: p05
+    source: g12
+    question: First pass yield please.
+  - id: p06
+    source: g12
+    question: Quality ratio of good over total.

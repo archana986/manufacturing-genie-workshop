@@ -1,161 +1,168 @@
-# Databricks Genie Workshop — Manufacturing Quality Analytics
+# Manufacturing Genie Workshop
 
-A hands-on workshop that teaches you how to build, evaluate, and optimize a
-**Databricks Genie** space for manufacturing analytics. You will create a
-fully configured AI assistant that answers natural-language questions about
-OEE, defect rates, scrap, downtime, and safety — then prove its accuracy
-with automated benchmarks.
+Hands-on series for Databricks Genie Agents. The story company is fictional: **Apex Precision Manufacturing** (six plants, automotive components, industrial pumps, and electronics assembly).
 
-## Workshop flow
+Pick a level. Each level is self-contained. Later levels reuse the same Apex model.
+
+| Level | Who | Time | You leave with |
+|---|---|---|---|
+| [1 Foundations](level-1-foundations/) | Analysts, BI leads, first-time authors | 2 hours | A curated agent at 10/10 on 10 benchmarks |
+| [2 Performance Lab](level-2-performance-lab/) | Data engineers, SAs | 4 hours | Accuracy and p50/p95 scorecard plus a test app |
+| [3 Production Scale](level-3-production/) | Platform / CoE | Full day | A forkable bundle, CI for **dev**, and a runbook |
 
 ```mermaid
 flowchart LR
-    subgraph data ["1. Data"]
-        NB01["01 Load Data"]
-        NB02["02 Prepare Tables"]
-    end
-    subgraph genie ["2. Build Genie"]
-        NB03["03 Create Spaces"]
-        NB04["04 Benchmarks"]
-        NB05["05 Explore"]
-        NB06["06 Code Skills"]
-    end
-    subgraph prove ["3. Prove It"]
-        NB07["07 A/B Compare"]
-    end
-    subgraph govern ["4. Govern & Deploy"]
-        NB08["08 Security"]
-        NB09["09 App"]
-        NB10["10 Monitoring"]
-        NB11["11 CI/CD"]
-    end
-
-    NB01 --> NB02 --> NB03 --> NB04 --> NB05 --> NB06 --> NB07 --> NB08 --> NB09 --> NB10 --> NB11
+  pick[Pick a level] --> L1[Level 1 Foundations]
+  pick --> L2[Level 2 Performance Lab]
+  pick --> L3[Level 3 Production]
+  L1 -.-> L2
+  L2 -.-> L3
 ```
 
-## What you will walk away with
+Later levels reuse the same Apex model. You can stop after any level.
 
-- **A production-ready Genie space** with curated instructions, Q-to-SQL examples, and benchmarks that answer manufacturing questions accurately.
-- **Proof that curation matters** (Notebook 07) — the same 4 hard questions pass on a configured space and fail on a blank one, showing that investing in examples and instructions is the difference.
-- **A repeatable evaluation workflow** (Notebook 04) — push benchmarks, run them in the UI, review failures with knowledge snippets, and iterate until 100%.
-- **A Genie Code skill** (Notebook 06) — a reusable domain knowledge file that lets you create new spaces from a simple prompt, no API code required.
-- **Security guardrails** (Notebook 08) — column masking with Unity Catalog, proving Genie respects row/column security policies.
-- **A deployable app** (Notebook 09) — Genie wrapped in a branded Databricks App your users can access directly.
+## What you get
+
+- Seed data and notebooks that run on **serverless**
+- Catalog-parameterized Genie agent templates (blank and curated)
+- Metric views for OEE, FPY, and maintenance (Level 2)
+- A Databricks Asset Bundle for agent, jobs, app, and permissions (Level 3)
+- GitHub Actions that deploy **dev** only; staging and prod are manual steps in `PROMOTION.md`
+
+## How this workshop improves an agent
+
+You curate Apex by hand in Level 1. Level 2 and Level 3 add tools around that same agent.
+
+| Tool | When | What it does in class |
+|---|---|---|
+| **IQ Scan** | Level 2 | Scores the agent on a 12-check checklist (instructions, examples, joins, benchmarks). Deterministic. No Prompt Registry. |
+| **Quick Fix** | Level 2 | Suggests patches for failing IQ Scan checks. You apply them, rescan, and rerun benchmarks. |
+| **Human PR loop** | Level 3 (default) | A thumbs-down or a failed benchmark becomes a pull request. CI validates. A person promotes. Nothing writes to prod by itself. |
+| **Auto-Optimize** | Level 3 (optional) | Workbench job that clones the agent, proposes instruction or example-SQL changes, and keeps a change only if benchmarks improve on train, validation, and a holdout set. Rolls back if the score drops. Needs Managed MLflow Prompt Registry from workspace **Previews** (Beta). Skip this module if that preview is off in the class workspace. |
+
+**MaxGenie** was an earlier Databricks Solutions skill that did the clone, train / validation / holdout, and rollback pattern as a standalone optimizer. Databricks archived that repo and folded the workflow into **Genie Workbench** Auto-Optimize. This workshop does not install MaxGenie. If a facilitator mentions the name, treat it as history, not a second product to deploy.
+
+IQ Scan and Quick Fix still need a Claude Sonnet endpoint on Foundation Model APIs. Your facilitator may host Workbench if the class workspace does not.
 
 ## Prerequisites
 
-- Databricks workspace with **Unity Catalog** and **Genie** enabled
-- A catalog and schema where you have `CREATE TABLE`, `CREATE VOLUME`, and `CREATE FUNCTION` permissions
-- A running **SQL warehouse** (serverless or Pro)
-- **Serverless** notebook compute (or a classic cluster with Unity Catalog access)
+Run `shared/00_prereq_check` before class. It checks:
 
-## Getting started
+1. Workspace login
+2. Databricks SQL entitlement
+3. CAN USE on a SQL warehouse (serverless or Pro)
+4. Serverless notebook compute
+5. Catalog and schema grants (USE CATALOG, USE SCHEMA, CREATE TABLE, and related)
+6. CREATE CATALOG (optional; most people skip this)
 
-1. Import the **`notebooks/`**, **`templates/`**, **`skill/`**, and **`app/`** folders into your Databricks workspace so they sit side-by-side:
+You also need Unity Catalog and Genie enabled. Workspace admins turn on **Managed MLflow Prompt Registry** from **Previews** only if you will run Auto-Optimize.
 
-   ```
-   /Workspace/Users/<your_email>/GM-Genie-Workshop/
-     notebooks/        ← 13 notebooks (00–12)
-     templates/        ← Genie space configuration
-     skill/            ← Genie Code skill file
-     app/              ← Databricks App source
-   ```
+## How to run
 
-2. Open **`00_workshop_config`** and set your **catalog** and **schema**.
+### 1. Configure
 
-3. Run notebooks **01 → 12** in order. Every notebook reads your config
-   automatically via `%run ./00_workshop_config`.
+1. Import this repo into your workspace so `shared/` sits next to `level-1-foundations/`.
+2. Open `shared/00_config`.
+3. Set the **catalog**, **schema**, **warehouse_id**, and **repo_root** widgets. `repo_root` is the workspace folder that contains `shared/` (example: `/Workspace/Users/<you>/Manufacturing-Genie-Workshop-v2`).
+4. Run the notebook. It fails fast if catalog, schema, or warehouse are still placeholders.
 
-> **Tip:** After notebook 01's `%pip install`, Python restarts. Re-run the
-> config cell in that notebook, then continue.
+Do not commit workspace hostnames, warehouse ids, or emails.
 
-## Notebooks
+### 2. Level 1 (2 hours)
 
-| # | Notebook | What you will do |
-|---|----------|-----------------|
-| 00 | **Workshop Config** | Set your catalog, schema, and preferences |
-| 01 | **Load Data** | Create 7 manufacturing tables (plants, lines, operators, events, quality metrics, safety, feedback) |
-| 02 | **Prepare Data** | Add column comments, create analytics functions |
-| 03 | **Create Genie Spaces** | Create 3 spaces (Blank, Configured, No Examples) |
-| 04 | **Benchmarks** | Push 10 benchmark questions to the Genie Benchmarks tab, run in the UI, fix failures with knowledge snippets and ground truth updates |
-| 05 | **Explore with Genie** | Ask questions in the Genie UI, verify with reference SQL and programmatic spot checks |
-| 06 | **Code Skills** | Use a Genie Code skill and a prompt to create a Genie space — no API code needed |
-| 07 | **A/B Compare** | Prove curated examples matter: run 4 hard questions on both spaces, fix the poor space, then validate in the UI with benchmarks and knowledge snippets |
-| 08 | **Security** | Column masking with Unity Catalog — prove Genie respects row/column security |
-| 09 | **Deploy App** | Wrap Genie in a branded Databricks App |
-| 10 | **Monitoring** | Track accuracy, usage, and query performance over time |
-| 11 | **CI/CD** *(optional)* | Promote Genie spaces across environments with code |
-| 12 | **Cleanup** *(optional)* | Remove all workshop assets |
-
-## How the evaluation works
-
-**Notebook 04** defines 10 benchmark questions that teach Genie the right SQL patterns:
+Create a curated Apex agent and get it green on 10 benchmarks.
 
 ```mermaid
-flowchart TD
-    B1["Define 10 benchmark questions\nwith ground-truth SQL"] --> B2["Push to Genie\nBenchmarks tab"]
-    B2 --> B3["Run in UI\nReview failures"]
-    B3 --> B4["Accept knowledge snippets\nUpdate ground truth"]
-    B4 --> B5{"All passing?"}
-    B5 -->|No| B3
-    B5 -->|Yes| B6["Benchmarks green"]
+flowchart LR
+  A[00_prereq_check] --> B[01_config_and_data]
+  B --> C[Create agent in the Genie UI]
+  C --> D[02_create_agent API templates]
+  D --> E[03_benchmarks 10 questions]
+  E --> F[04_basic_tests blank vs curated]
+  F --> G[Shift-start briefing in the UI]
 ```
 
-**Notebook 07** uses 4 harder questions to prove curated examples matter:
+Run in order, on serverless:
+
+1. `shared/00_prereq_check`
+2. `level-1-foundations/01_config_and_data`
+3. Create the agent in the Genie UI first, then run `level-1-foundations/02_create_agent`
+4. `level-1-foundations/03_benchmarks`
+5. `level-1-foundations/04_basic_tests`
+
+Facilitator click-path: `level-1-foundations/FACILITATOR_GUIDE.md`.
+
+### 3. Level 2 (4 hours)
+
+Measure accuracy and latency, then score the agent in Workbench.
 
 ```mermaid
-flowchart TD
-    A1["4 hard questions\nnot in benchmarks"] --> A2["Phase 1: Run on\nGood and Poor spaces"]
-    A2 --> A3["Phase 2: Fix Poor space\nby adding curated examples"]
-    A3 --> A4["Phase 3: Re-test\nPoor space passes"]
-    A4 --> A5["Phase 4: Validate in UI\nBenchmark all 4 questions"]
-    A5 --> A6["Add curated example\nto fix Q4"]
-    A6 --> A7["Re-run until 100%"]
+flowchart LR
+  A[10_complex_data] --> B[11_metric_views]
+  B --> C[12_agent_v2 A tables vs B metrics]
+  C --> D[13_accuracy_and_latency scorecard]
+  D --> E[14_performance_tuning]
+  E --> F[Workbench IQ Scan and Quick Fix]
+  F --> G[Ask plus Test Lab app]
 ```
 
-The 10 benchmarks **teach patterns** (state joins, ratio calculations, shift
-aggregation) using different filters and time ranges. The 4 evaluation
-questions in notebook 07 are intentionally **different** -- Genie must
-generalize from the patterns, not memorize answers.
+Same widgets. Use a schema for Level 2 (example: `<catalog>.<schema_l2>`). Run `10_complex_data` through `14_performance_tuning`, then the Workbench IQ Scan lab. Optional: vibe-code the Ask + Test Lab app from `level-2-performance-lab/vibe/PROMPT.md`.
 
-## Notebook-specific notes
+Default telemetry is 10 million rows. Set widget **telemetry_rows** to `50000000` only if you have time and warehouse capacity.
 
-- **06 — Skills:** Copy `skill/manufacturing-analytics_genie/SKILL.md` into your workspace's `.assistant/skills/` directory before running notebook 06.
-- **08 — Security:** Replace `admin_group` with a real group in your workspace.
-- **09 — App:** Uses `app/app.py`, `app.yaml`, and `requirements.txt`.
-- **10 — Monitoring:** Queries `system.access.audit` and `system.query.history`; the notebook handles missing access gracefully.
+### 4. Level 3 (full day)
 
-## Repository structure
+Put every asset in a bundle. GitHub Actions deploy **dev** only. Staging and prod stay manual.
 
-```
-├── notebooks/          13 workshop notebooks (00–12)
-├── templates/          Genie space configuration template
-│   └── manufacturing_genie_configured.json
-├── skill/              Genie Code skill file
-│   └── manufacturing-analytics_genie/
-│       └── SKILL.md
-├── app/                Databricks App source
-│   ├── app.py
-│   ├── app.yaml
-│   └── requirements.txt
-└── README.md
+```mermaid
+flowchart LR
+  A[Copy level-3-production] --> B[Set catalog schema warehouse]
+  B --> C[bundle validate strict target dev]
+  C --> D[Open a pull request]
+  D --> E[CI validate and payload tests]
+  E --> F[Merge deploys dev only]
+  F --> G[PROMOTION.md staging then prod]
+  G -.-> H[Optional Auto-Optimize on staging]
 ```
 
-## Compute
+1. Copy `level-3-production/` as your project.
+2. Set bundle variables (`catalog`, `schema`, `warehouse_id`) per target.
+3. `databricks bundle validate --strict --target dev`
+4. Open a PR. GitHub Actions run `bundle validate` and the payload tests. Run the IQ Scan floor in Workbench before you promote (see `PROMOTION.md`).
+5. Merge deploys **dev** only.
+6. Follow `level-3-production/PROMOTION.md` for staging and prod.
 
-All notebooks run on **Serverless** compute. Classic clusters with Unity Catalog access also work.
+## Limitations
 
-## Troubleshooting
+- Benchmark scoring is exact. TIMEOUT, NO_ANSWER, and ERROR count as FAIL.
+- Genie Conversation API is about 5 questions per minute on the free tier. The Test Lab throttles.
+- Metric view materialization cannot be used with row filters, column masks, or ABAC.
+- Entity matching cannot be used on columns that have row filters or masks.
+- Auto-Optimize is optional. Prompt Registry is workspace Beta, not Public Preview. Skip the module if the preview is off.
+- `genie-iq-score-lite` is not on public PyPI. Level 3 lint uses Workbench IQ Scan or a vendored scorer.
 
-| Symptom | Fix |
-|---------|-----|
-| Notebook 03 fails to create spaces | Check Genie entitlement, SQL warehouse availability, and API permissions. |
-| Wrong catalog in Genie answers | Ensure notebook 00 has the same catalog/schema you used in 01–02. |
-| Notebook 01 fails after pip install | After `%pip`, Python restarts. Re-run the config cell, then continue. |
-| Notebook 07 `FileNotFoundError` | The `templates/` folder must be at the same level as `notebooks/`. |
-| Benchmarks in wrong UI tab | Notebook 04 uses the `data-rooms` API for benchmarks. If benchmarks appear under "SQL Queries," re-run notebook 04. |
+## References
 
-## License and data
+- [Create and manage a Genie Agent](https://docs.databricks.com/aws/en/genie/set-up)
+- [Unity Catalog metric views](https://docs.databricks.com/aws/en/metric-views/)
+- [Declarative Automation Bundles](https://docs.databricks.com/aws/en/dev-tools/bundles/)
+- [Genie One MCP](https://docs.databricks.com/aws/en/agents/mcp-tools/genie-mcp)
+- [Prompt Registry](https://docs.databricks.com/mlflow3/genai/prompt-version-mgmt/prompt-registry/)
+- [Manage previews](https://docs.databricks.com/aws/en/admin/workspace-settings/manage-previews)
+- [Genie Workbench](https://github.com/databricks-solutions/databricks-genie-workbench)
 
-Sample data is **synthetic** — generated for training and demos, not real
-production or customer data.
+## Files
+
+| Path | Use |
+|---|---|
+| `shared/00_config` | Set catalog, schema, warehouse |
+| `shared/00_prereq_check` | Six access checks before class |
+| `shared/lib/genie_client.py` | All Genie REST calls |
+| `level-1-foundations/` | Foundations notebooks and templates |
+| `level-2-performance-lab/` | Performance lab, metric views, app |
+| `level-3-production/` | Bundle, CI for dev, promotion runbook |
+| `cleanup/` | Tear down workshop objects |
+
+## License
+
+Apache License 2.0. See `LICENSE`.

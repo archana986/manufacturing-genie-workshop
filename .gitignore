@@ -1,9 +1,5 @@
-.DS_Store
-.env
-*.pyc
+# Ignore Python debris
 __pycache__/
-.ipynb_checkpoints/
-_archive*/
-transcripts/
-DECISION_LOG.md
-scripts/
+*.pyc
+.DS_Store
+.databricks/

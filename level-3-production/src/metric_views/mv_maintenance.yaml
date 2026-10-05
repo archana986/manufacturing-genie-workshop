@@ -1,0 +1,24 @@
+version: 1.1
+source: ${catalog}.${schema}.maintenance_work_orders
+comment: Maintenance MTBF and MTTR from work orders.
+dimensions:
+  - name: line_id
+    expr: line_id
+  - name: wo_type
+    expr: wo_type
+    comment: planned or unplanned
+  - name: opened_date
+    expr: opened_date
+measures:
+  - name: work_order_count
+    expr: COUNT(1)
+  - name: mttr_minutes
+    expr: AVG(mttr_minutes)
+    comment: Mean time to repair in minutes
+    synonyms: ["MTTR"]
+  - name: unplanned_count
+    expr: COUNT(CASE WHEN wo_type = 'unplanned' THEN 1 END)
+  - name: mtbf_days
+    expr: 90.0 / NULLIF(COUNT(CASE WHEN wo_type = 'unplanned' THEN 1 END), 0)
+    comment: Approximate MTBF over a 90 day window
+    synonyms: ["MTBF"]

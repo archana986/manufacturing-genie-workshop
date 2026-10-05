@@ -1,0 +1,32 @@
+version: 1.1
+source: ${catalog}.${schema}.fct_line_shift
+comment: Quality measures including scrap cost proxy and rolling scrap.
+dimensions:
+  - name: line_id
+    expr: line_id
+  - name: shift_date
+    expr: shift_date
+measures:
+  - name: units
+    expr: SUM(units)
+  - name: good_units
+    expr: SUM(good_units)
+  - name: defect_units
+    expr: SUM(units - good_units)
+  - name: fpy
+    expr: SUM(good_units) / NULLIF(SUM(units), 0)
+    comment: First pass yield as a 0 to 1 ratio
+    synonyms: ["first pass yield", "yield"]
+  - name: defect_ppm
+    expr: 1000000.0 * SUM(units - good_units) / NULLIF(SUM(units), 0)
+    comment: Defect parts per million
+  - name: scrap_cost
+    expr: SUM((units - good_units) * 12.5)
+    comment: Scrap cost using a 12.50 per unit standard
+  - name: scrap_units_7d
+    expr: SUM(units - good_units)
+    comment: Trailing 7 day scrap units excluding today
+    window:
+      - order: shift_date
+        range: trailing 7 day
+        semiadditive: last

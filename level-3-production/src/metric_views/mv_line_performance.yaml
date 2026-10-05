@@ -1,0 +1,38 @@
+version: 1.1
+source: ${catalog}.${schema}.fct_line_shift
+comment: Line performance. OEE is a ratio of sums, not an average of daily OEE.
+dimensions:
+  - name: line_id
+    expr: line_id
+    comment: Production line
+    synonyms: ["line", "production line"]
+  - name: shift_date
+    expr: shift_date
+    comment: Shift calendar date
+  - name: shift_name
+    expr: shift_name
+    comment: Morning Afternoon or Night
+measures:
+  - name: planned_seconds
+    expr: SUM(planned_seconds)
+  - name: run_seconds
+    expr: SUM(run_seconds)
+  - name: units
+    expr: SUM(units)
+  - name: good_units
+    expr: SUM(good_units)
+  - name: availability
+    expr: SUM(run_seconds) / NULLIF(SUM(planned_seconds), 0)
+    comment: Run time over planned time
+    synonyms: ["uptime ratio"]
+  - name: performance
+    expr: SUM(units * ideal_cycle_seconds) / NULLIF(SUM(run_seconds), 0)
+    comment: Ideal time for units produced over run time
+  - name: quality
+    expr: SUM(good_units) / NULLIF(SUM(units), 0)
+    comment: Good units over total units
+    synonyms: ["FPY", "first pass yield"]
+  - name: oee
+    expr: SUM(good_units * ideal_cycle_seconds) / NULLIF(SUM(planned_seconds), 0)
+    comment: OEE as ratio of sums (good units times ideal cycle over planned time)
+    synonyms: ["overall equipment effectiveness"]

@@ -1,0 +1,29 @@
+{
+  "questions": [
+    {"id": "g01", "category": "easy", "question": "What is overall OEE?"},
+    {"id": "g02", "category": "easy", "question": "What is first pass yield?"},
+    {"id": "g03", "category": "easy", "question": "How many work orders exist?"},
+    {"id": "g04", "category": "easy", "question": "How many telemetry rows are there?"},
+    {"id": "g05", "category": "easy", "question": "List distinct shift names."},
+    {"id": "g06", "category": "multi_join", "question": "Which line has the most unplanned work orders?"},
+    {"id": "g07", "category": "multi_join", "question": "Which supplier is on the most component lots?"},
+    {"id": "g08", "category": "multi_join", "question": "How many components are on each BOM?"},
+    {"id": "g09", "category": "multi_join", "question": "Which current firmware versions are in use?"},
+    {"id": "g10", "category": "multi_join", "question": "Join lots to suppliers and count lots by supplier."},
+    {"id": "g11", "category": "ratio", "question": "Compute OEE as a ratio of sums, not an average of ratios."},
+    {"id": "g12", "category": "ratio", "question": "What is quality as good units over total units?"},
+    {"id": "g13", "category": "ratio", "question": "What is availability as run seconds over planned seconds?"},
+    {"id": "g14", "category": "ratio", "question": "What is defect PPM?"},
+    {"id": "g15", "category": "ratio", "question": "What is approximate MTBF in days?"},
+    {"id": "g16", "category": "time_window", "question": "What is trailing 7 day scrap from the quality metric view?"},
+    {"id": "g17", "category": "time_window", "question": "How many work orders opened in the last 30 days?"},
+    {"id": "g18", "category": "time_window", "question": "Telemetry count for yesterday."},
+    {"id": "g19", "category": "time_window", "question": "Average MTTR this quarter."},
+    {"id": "g20", "category": "time_window", "question": "Units produced yesterday by line."},
+    {"id": "g21", "category": "ambiguous", "question": "How is Plant 3 performing?"},
+    {"id": "g22", "category": "ambiguous", "question": "Is quality good?"},
+    {"id": "g23", "category": "ambiguous", "question": "Show me OEE."},
+    {"id": "g24", "category": "ambiguous", "question": "Which line should we fix first?"},
+    {"id": "g25", "category": "ambiguous", "question": "Why did yield drop?"}
+  ]
+}

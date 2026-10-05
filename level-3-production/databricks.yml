@@ -1,0 +1,42 @@
+bundle:
+  name: apex-genie-production
+
+variables:
+  catalog:
+    description: Unity Catalog name
+  schema:
+    description: Schema for this target (dev, staging, or prod)
+  warehouse_id:
+    description: SQL warehouse id
+  parent_path:
+    description: Workspace folder that owns the Genie agent
+  genie_space_id:
+    description: Existing agent id after first deploy (optional)
+    default: ""
+
+include:
+  - resources/*.yml
+
+targets:
+  dev:
+    default: true
+    mode: development
+    variables:
+      catalog: YOUR_CATALOG
+      schema: YOUR_SCHEMA_DEV
+      warehouse_id: YOUR_WAREHOUSE_ID
+      parent_path: /Workspace/Users/YOUR_USER/apex-genie
+  staging:
+    mode: production
+    variables:
+      catalog: YOUR_CATALOG
+      schema: YOUR_SCHEMA_STAGING
+      warehouse_id: YOUR_WAREHOUSE_ID
+      parent_path: /Workspace/Shared/apex-genie/staging
+  prod:
+    mode: production
+    variables:
+      catalog: YOUR_CATALOG
+      schema: YOUR_SCHEMA_PROD
+      warehouse_id: YOUR_WAREHOUSE_ID
+      parent_path: /Workspace/Shared/apex-genie/prod
