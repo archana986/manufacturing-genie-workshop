@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="7" flood-color="#1B3139" flood-opacity="0.14"/>
+    </filter>
+    <style>
+      .title{font:700 48px 'DM Sans',Arial,sans-serif;fill:#1B3139}
+      .subtitle{font:400 22px 'DM Sans',Arial,sans-serif;fill:#5A6F77}
+      .section{font:700 24px 'DM Sans',Arial,sans-serif;fill:#1B3139}
+      .step{font:700 22px 'DM Sans',Arial,sans-serif;fill:#fff}
+      .cardTitleWhite{font:700 26px 'DM Sans',Arial,sans-serif;fill:#fff}
+      .cardTitle{font:700 22px 'DM Sans',Arial,sans-serif;fill:#1B3139}
+      .bodyWhite{font:400 18px 'DM Sans',Arial,sans-serif;fill:#fff}
+      .body{font:400 17px 'DM Sans',Arial,sans-serif;fill:#5A6F77}
+      .label{font:700 14px 'DM Sans',Arial,sans-serif;fill:#FF3621;letter-spacing:1.4px}
+      .footer{font:400 18px 'DM Sans',Arial,sans-serif;fill:#5A6F77}
+    </style>
+  </defs>
+  <rect width="1920" height="1080" fill="#FFFFFF"/>
+  <rect width="1920" height="12" fill="#FF3621"/>
+  <text x="78" y="78" class="title">Apex Genie workshop</text>
+  <text x="78" y="116" class="subtitle">Three self-contained levels. Same fictional Apex model. Stop after any level. Later levels reuse Unity Catalog tables and the curated agent.</text>
+
+  <rect x="64" y="156" width="560" height="720" rx="20" fill="#F8F7F5" stroke="#DDD9D2" stroke-width="2"/>
+  <rect x="680" y="156" width="560" height="720" rx="20" fill="#EFF6FB" stroke="#B7D4EA" stroke-width="2"/>
+  <rect x="1296" y="156" width="560" height="720" rx="20" fill="#EFF9F5" stroke="#A8DCC7" stroke-width="2"/>
+
+  <circle cx="104" cy="208" r="24" fill="#1B3139"/><text x="104" y="216" text-anchor="middle" class="step">1</text>
+  <text x="142" y="218" class="section">FOUNDATIONS  /  2 HOURS</text>
+  <circle cx="720" cy="208" r="24" fill="#2272B4"/><text x="720" y="216" text-anchor="middle" class="step">2</text>
+  <text x="758" y="218" class="section">PERFORMANCE LAB  /  4 HOURS</text>
+  <circle cx="1336" cy="208" r="24" fill="#00A972"/><text x="1336" y="216" text-anchor="middle" class="step">3</text>
+  <text x="1374" y="218" class="section">PRODUCTION  /  FULL DAY</text>
+
+  <rect x="98" y="258" width="492" height="140" rx="12" fill="#1B3139" filter="url(#shadow)"/>
+  <text x="344" y="312" text-anchor="middle" class="cardTitleWhite">Curated Genie agent</text>
+  <text x="344" y="350" text-anchor="middle" class="bodyWhite">10 exact benchmarks at 10/10</text>
+
+  <rect x="98" y="422" width="492" height="120" rx="12" fill="#FFFFFF" stroke="#9AABB2" stroke-width="2" filter="url(#shadow)"/>
+  <text x="344" y="468" text-anchor="middle" class="cardTitle">Seed tables in Unity Catalog</text>
+  <text x="344" y="504" text-anchor="middle" class="body">Blank vs curated conversation tests</text>
+
+  <rect x="98" y="566" width="492" height="120" rx="12" fill="#FFFFFF" stroke="#9AABB2" stroke-width="2" filter="url(#shadow)"/>
+  <text x="344" y="612" text-anchor="middle" class="cardTitle">Who</text>
+  <text x="344" y="648" text-anchor="middle" class="body">Analysts, BI leads, first-time authors</text>
+
+  <rect x="98" y="710" width="492" height="120" rx="12" fill="#FFFFFF" stroke="#9AABB2" stroke-width="2" filter="url(#shadow)"/>
+  <text x="344" y="756" text-anchor="middle" class="label">LEAVE WITH</text>
+  <text x="344" y="796" text-anchor="middle" class="cardTitle">A trusted agent on governed tables</text>
+
+  <rect x="714" y="258" width="492" height="140" rx="12" fill="#2272B4" filter="url(#shadow)"/>
+  <text x="960" y="312" text-anchor="middle" class="cardTitleWhite">Metric views + scorecard</text>
+  <text x="960" y="350" text-anchor="middle" class="bodyWhite">OEE, FPY, maintenance as MEASURE()</text>
+
+  <rect x="714" y="422" width="492" height="120" rx="12" fill="#FFFFFF" stroke="#9AABB2" stroke-width="2" filter="url(#shadow)"/>
+  <text x="960" y="468" text-anchor="middle" class="cardTitle">10M telemetry performance lab</text>
+  <text x="960" y="504" text-anchor="middle" class="body">Accuracy, p50 / p95, IQ Scan, Quick Fix</text>
+
+  <rect x="714" y="566" width="492" height="120" rx="12" fill="#FFFFFF" stroke="#9AABB2" stroke-width="2" filter="url(#shadow)"/>
+  <text x="960" y="612" text-anchor="middle" class="cardTitle">Who</text>
+  <text x="960" y="648" text-anchor="middle" class="body">Data engineers and solutions architects</text>
+
+  <rect x="714" y="710" width="492" height="120" rx="12" fill="#FFFFFF" stroke="#9AABB2" stroke-width="2" filter="url(#shadow)"/>
+  <text x="960" y="756" text-anchor="middle" class="label">LEAVE WITH</text>
+  <text x="960" y="796" text-anchor="middle" class="cardTitle">Scorecard plus Ask + Test Lab</text>
+
+  <rect x="1330" y="258" width="492" height="140" rx="12" fill="#00A972" filter="url(#shadow)"/>
+  <text x="1576" y="312" text-anchor="middle" class="cardTitleWhite">Databricks Asset Bundle</text>
+  <text x="1576" y="350" text-anchor="middle" class="bodyWhite">Agent, jobs, pipeline, app, grants</text>
+
+  <rect x="1330" y="422" width="492" height="120" rx="12" fill="#FFFFFF" stroke="#9AABB2" stroke-width="2" filter="url(#shadow)"/>
+  <text x="1576" y="468" text-anchor="middle" class="cardTitle">CI deploys dev only</text>
+  <text x="1576" y="504" text-anchor="middle" class="body">Staging and prod stay a human promote</text>
+
+  <rect x="1330" y="566" width="492" height="120" rx="12" fill="#FFFFFF" stroke="#9AABB2" stroke-width="2" filter="url(#shadow)"/>
+  <text x="1576" y="612" text-anchor="middle" class="cardTitle">Who</text>
+  <text x="1576" y="648" text-anchor="middle" class="body">Platform and center of excellence</text>
+
+  <rect x="1330" y="710" width="492" height="120" rx="12" fill="#FFFFFF" stroke="#9AABB2" stroke-width="2" filter="url(#shadow)"/>
+  <text x="1576" y="756" text-anchor="middle" class="label">LEAVE WITH</text>
+  <text x="1576" y="796" text-anchor="middle" class="cardTitle">Forkable bundle and runbook</text>
+
+  <rect x="64" y="900" width="1792" height="120" rx="16" fill="#1B3139"/>
+  <text x="960" y="948" text-anchor="middle" class="cardTitleWhite">Shared Apex model in Unity Catalog</text>
+  <text x="960" y="986" text-anchor="middle" class="bodyWhite">Synthetic plants, lines, quality, and telemetry. Parameterized catalog and schema. No customer data in this repo.</text>
+</svg>

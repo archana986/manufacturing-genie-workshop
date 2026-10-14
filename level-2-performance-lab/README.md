@@ -2,6 +2,8 @@
 
 4 hour path for data engineers and SAs.
 
+![Level 2: telemetry, metric views, agent A versus B, scorecard, IQ Scan.](../docs/diagrams/workshop_l2.png)
+
 ## What you get
 
 Complex Apex tables, three metric views, an A vs B scorecard (accuracy and p50/p95), a Workbench IQ Scan lab, and a reference Ask + Test Lab app.

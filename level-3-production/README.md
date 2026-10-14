@@ -2,6 +2,8 @@
 
 Full-day path. Copy **this folder** as the root of your project, then deploy with Databricks Asset Bundles.
 
+![Level 3: bundle deploys gold, metric views, Genie, and the app. CI is dev only. Promotion is a person.](../docs/diagrams/workshop_l3.png)
+
 ## What you get
 
 One bundle for the agent, metric views, gold pipeline, Ask + Test Lab app, jobs, and permissions. GitHub Actions validate pull requests and deploy **dev** on merge. Staging and prod stay manual (`PROMOTION.md`).

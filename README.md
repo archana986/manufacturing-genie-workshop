@@ -4,20 +4,15 @@ Hands-on series for Databricks Genie Agents. The story company is fictional: **A
 
 Pick a level. Each level is self-contained. Later levels reuse the same Apex model.
 
+![Three workshop levels on the same Apex Unity Catalog model: foundations in two hours, a performance lab in four hours, and a production bundle in a full day.](docs/diagrams/workshop_overview.png)
+
+Editable source: [`docs/diagrams/workshop_overview.svg`](docs/diagrams/workshop_overview.svg).
+
 | Level | Who | Time | You leave with |
 |---|---|---|---|
 | [1 Foundations](level-1-foundations/) | Analysts, BI leads, first-time authors | 2 hours | A curated agent at 10/10 on 10 benchmarks |
 | [2 Performance Lab](level-2-performance-lab/) | Data engineers, SAs | 4 hours | Accuracy and p50/p95 scorecard plus a test app |
 | [3 Production Scale](level-3-production/) | Platform / CoE | Full day | A forkable bundle, CI for **dev**, and a runbook |
-
-```mermaid
-flowchart LR
-  pick[Pick a level] --> L1[Level 1 Foundations]
-  pick --> L2[Level 2 Performance Lab]
-  pick --> L3[Level 3 Production]
-  L1 -.-> L2
-  L2 -.-> L3
-```
 
 Later levels reuse the same Apex model. You can stop after any level.
 
@@ -72,15 +67,9 @@ Do not commit workspace hostnames, warehouse ids, or emails.
 
 Create a curated Apex agent and get it green on 10 benchmarks.
 
-```mermaid
-flowchart LR
-  A[00_prereq_check] --> B[01_config_and_data]
-  B --> C[Create agent in the Genie UI]
-  C --> D[02_create_agent API templates]
-  D --> E[03_benchmarks 10 questions]
-  E --> F[04_basic_tests blank vs curated]
-  F --> G[Shift-start briefing in the UI]
-```
+![Level 1 flow: prereq, seed Unity Catalog tables, create the Genie agent, run 10 exact benchmarks, then blank versus curated conversation tests.](docs/diagrams/workshop_l1.png)
+
+Editable source: [`docs/diagrams/workshop_l1.svg`](docs/diagrams/workshop_l1.svg).
 
 Run in order, on serverless:
 
@@ -96,15 +85,9 @@ Facilitator click-path: `level-1-foundations/FACILITATOR_GUIDE.md`.
 
 Measure accuracy and latency, then score the agent in Workbench.
 
-```mermaid
-flowchart LR
-  A[10_complex_data] --> B[11_metric_views]
-  B --> C[12_agent_v2 A tables vs B metrics]
-  C --> D[13_accuracy_and_latency scorecard]
-  D --> E[14_performance_tuning]
-  E --> F[Workbench IQ Scan and Quick Fix]
-  F --> G[Ask plus Test Lab app]
-```
+![Level 2 flow: 10 million telemetry rows, metric views, agent A on tables versus agent B on MEASURE views, scorecard, then IQ Scan and the Ask plus Test Lab.](docs/diagrams/workshop_l2.png)
+
+Editable source: [`docs/diagrams/workshop_l2.svg`](docs/diagrams/workshop_l2.svg).
 
 Same widgets. Use a schema for Level 2 (example: `<catalog>.<schema_l2>`). Run `10_complex_data` through `14_performance_tuning`, then the Workbench IQ Scan lab. Optional: vibe-code the Ask + Test Lab app from `level-2-performance-lab/vibe/PROMPT.md`.
 
@@ -114,16 +97,9 @@ Default telemetry is 10 million rows. Set widget **telemetry_rows** to `50000000
 
 Put every asset in a bundle. GitHub Actions deploy **dev** only. Staging and prod stay manual.
 
-```mermaid
-flowchart LR
-  A[Copy level-3-production] --> B[Set catalog schema warehouse]
-  B --> C[bundle validate strict target dev]
-  C --> D[Open a pull request]
-  D --> E[CI validate and payload tests]
-  E --> F[Merge deploys dev only]
-  F --> G[PROMOTION.md staging then prod]
-  G -.-> H[Optional Auto-Optimize on staging]
-```
+![Level 3 flow: gold pipeline, metric views, Genie space, and app in a Databricks Asset Bundle. CI deploys dev. A person promotes staging and prod. Auto-Optimize is optional and needs Prompt Registry.](docs/diagrams/workshop_l3.png)
+
+Editable source: [`docs/diagrams/workshop_l3.svg`](docs/diagrams/workshop_l3.svg).
 
 1. Copy `level-3-production/` as your project.
 2. Set bundle variables (`catalog`, `schema`, `warehouse_id`) per target.
@@ -162,6 +138,7 @@ flowchart LR
 | `level-2-performance-lab/` | Performance lab, metric views, app |
 | `level-3-production/` | Bundle, CI for dev, promotion runbook |
 | `cleanup/` | Tear down workshop objects |
+| `docs/diagrams/` | Architecture PNG and editable SVG for each level |
 
 ## License
 

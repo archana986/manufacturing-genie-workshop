@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="7" flood-color="#1B3139" flood-opacity="0.14"/>
+    </filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 z" fill="#1B3139"/>
+    </marker>
+    <style>
+      .title{font:700 48px 'DM Sans',Arial,sans-serif;fill:#1B3139}
+      .subtitle{font:400 22px 'DM Sans',Arial,sans-serif;fill:#5A6F77}
+      .step{font:700 20px 'DM Sans',Arial,sans-serif;fill:#fff}
+      .cardTitle{font:700 20px 'DM Sans',Arial,sans-serif;fill:#1B3139}
+      .cardTitleWhite{font:700 22px 'DM Sans',Arial,sans-serif;fill:#fff}
+      .body{font:400 16px 'DM Sans',Arial,sans-serif;fill:#5A6F77}
+      .bodyWhite{font:400 16px 'DM Sans',Arial,sans-serif;fill:#fff}
+      .label{font:700 14px 'DM Sans',Arial,sans-serif;fill:#FF3621;letter-spacing:1.4px}
+      .line{fill:none;stroke:#1B3139;stroke-width:4;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect width="1920" height="1080" fill="#FFFFFF"/>
+  <rect width="1920" height="12" fill="#FF3621"/>
+  <text x="78" y="78" class="title">Level 2  /  Performance lab</text>
+  <text x="78" y="116" class="subtitle">Four hours. Measure accuracy and latency on metric views. Default telemetry is 10 million rows (50 million is optional).</text>
+
+  <rect x="56" y="160" width="292" height="200" rx="14" fill="#1B3139" filter="url(#shadow)"/>
+  <circle cx="94" cy="202" r="20" fill="#FF3621"/><text x="94" y="209" text-anchor="middle" class="step">10</text>
+  <text x="202" y="250" text-anchor="middle" class="cardTitleWhite">Complex data</text>
+  <text x="202" y="286" text-anchor="middle" class="bodyWhite">Gold shift fact, BOM,</text>
+  <text x="202" y="316" text-anchor="middle" class="bodyWhite">clustered sensor telemetry</text>
+
+  <path d="M348 260 L392 260" class="line"/>
+
+  <rect x="404" y="160" width="292" height="200" rx="14" fill="#FFFFFF" stroke="#9AABB2" stroke-width="2" filter="url(#shadow)"/>
+  <circle cx="442" cy="202" r="20" fill="#2272B4"/><text x="442" y="209" text-anchor="middle" class="step">11</text>
+  <text x="550" y="250" text-anchor="middle" class="cardTitle">Metric views</text>
+  <text x="550" y="286" text-anchor="middle" class="body">OEE as a ratio of sums</text>
+  <text x="550" y="316" text-anchor="middle" class="body">FPY and maintenance MTTR</text>
+
+  <path d="M696 260 L740 260" class="line"/>
+
+  <rect x="752" y="160" width="292" height="200" rx="14" fill="#2272B4" filter="url(#shadow)"/>
+  <circle cx="790" cy="202" r="20" fill="#1B3139"/><text x="790" y="209" text-anchor="middle" class="step">12</text>
+  <text x="898" y="250" text-anchor="middle" class="cardTitleWhite">Agent A vs agent B</text>
+  <text x="898" y="286" text-anchor="middle" class="bodyWhite">A reads tables</text>
+  <text x="898" y="316" text-anchor="middle" class="bodyWhite">B reads MEASURE() views</text>
+
+  <path d="M1044 260 L1088 260" class="line"/>
+
+  <rect x="1100" y="160" width="292" height="200" rx="14" fill="#FFFFFF" stroke="#9AABB2" stroke-width="2" filter="url(#shadow)"/>
+  <circle cx="1138" cy="202" r="20" fill="#1B3139"/><text x="1138" y="209" text-anchor="middle" class="step">13</text>
+  <text x="1246" y="250" text-anchor="middle" class="cardTitle">Accuracy + latency</text>
+  <text x="1246" y="286" text-anchor="middle" class="body">Scorecard PASS / FAIL</text>
+  <text x="1246" y="316" text-anchor="middle" class="body">p50 and p95 on the warehouse</text>
+
+  <path d="M1392 260 L1436 260" class="line"/>
+
+  <rect x="1448" y="160" width="416" height="200" rx="14" fill="#00A972" filter="url(#shadow)"/>
+  <circle cx="1486" cy="202" r="20" fill="#1B3139"/><text x="1486" y="209" text-anchor="middle" class="step">14</text>
+  <text x="1656" y="250" text-anchor="middle" class="cardTitleWhite">Tuning + Workbench</text>
+  <text x="1656" y="286" text-anchor="middle" class="bodyWhite">IQ Scan, then Quick Fix</text>
+  <text x="1656" y="316" text-anchor="middle" class="bodyWhite">Ask + Test Lab app (throttled)</text>
+
+  <rect x="56" y="400" width="900" height="580" rx="20" fill="#EFF6FB" stroke="#B7D4EA" stroke-width="2"/>
+  <text x="88" y="456" class="label">METRIC CONTRACT</text>
+  <rect x="88" y="484" width="836" height="140" rx="12" fill="#FFFFFF" stroke="#9AABB2" stroke-width="2" filter="url(#shadow)"/>
+  <text x="506" y="540" text-anchor="middle" class="cardTitle">OEE is SUM(run) / SUM(planned), never an average of percents</text>
+  <text x="506" y="580" text-anchor="middle" class="body">FPY is good_units / units. Scrap is a ratio. Ask MEASURE() on the view.</text>
+  <rect x="88" y="648" width="400" height="280" rx="12" fill="#1B3139" filter="url(#shadow)"/>
+  <text x="288" y="720" text-anchor="middle" class="cardTitleWhite">Agent A</text>
+  <text x="288" y="768" text-anchor="middle" class="bodyWhite">Joined tables</text>
+  <text x="288" y="804" text-anchor="middle" class="bodyWhite">Easy to invent a wrong grain</text>
+  <rect x="524" y="648" width="400" height="280" rx="12" fill="#2272B4" filter="url(#shadow)"/>
+  <text x="724" y="720" text-anchor="middle" class="cardTitleWhite">Agent B</text>
+  <text x="724" y="768" text-anchor="middle" class="bodyWhite">Metric views only</text>
+  <text x="724" y="804" text-anchor="middle" class="bodyWhite">Same certified measures</text>
+
+  <rect x="980" y="400" width="884" height="580" rx="20" fill="#F8F7F5" stroke="#DDD9D2" stroke-width="2"/>
+  <text x="1012" y="456" class="label">LAB OUTPUTS</text>
+  <rect x="1012" y="484" width="820" height="140" rx="12" fill="#FFFFFF" stroke="#9AABB2" stroke-width="2" filter="url(#shadow)"/>
+  <text x="1422" y="540" text-anchor="middle" class="cardTitle">Scorecard table in Unity Catalog</text>
+  <text x="1422" y="580" text-anchor="middle" class="body">Per-question verdict and latency. TIMEOUT is FAIL.</text>
+  <rect x="1012" y="648" width="820" height="140" rx="12" fill="#FFFFFF" stroke="#9AABB2" stroke-width="2" filter="url(#shadow)"/>
+  <text x="1422" y="704" text-anchor="middle" class="cardTitle">IQ Scan is a 12-check checklist</text>
+  <text x="1422" y="744" text-anchor="middle" class="body">Deterministic. No Prompt Registry required.</text>
+  <rect x="1012" y="812" width="820" height="128" rx="12" fill="#FFFFFF" stroke="#9AABB2" stroke-width="2" filter="url(#shadow)"/>
+  <text x="1422" y="864" text-anchor="middle" class="cardTitle">Conversation API about 5 questions / minute</text>
+  <text x="1422" y="900" text-anchor="middle" class="body">The Test Lab throttles. Plan the demo accordingly.</text>
+</svg>

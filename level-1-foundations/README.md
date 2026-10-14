@@ -2,6 +2,8 @@
 
 2 hour path for first-time Genie authors.
 
+![Level 1: prereq, seed tables, create the agent, 10 benchmarks, blank versus curated tests.](../docs/diagrams/workshop_l1.png)
+
 ## What you get
 
 A curated Apex Precision Manufacturing agent on seven tables, 10 benchmarks, and a blank vs curated comparison.
