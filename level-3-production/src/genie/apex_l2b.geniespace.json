@@ -3,7 +3,7 @@
   "instructions": {
     "text_instructions": [
       {
-        "id": "l3-text-01",
+        "id": "ddf2744241654a308c3133e60f0936d2",
         "content": [
           "Prefer MEASURE() on metric views. OEE is a 0 to 1 ratio of sums. Never average daily OEE percentages. FPY is good_units / units. Scrap rate is a ratio, never a date."
         ]
@@ -11,28 +11,28 @@
     ],
     "example_question_sqls": [
       {
-        "id": "l3-ex-01",
+        "id": "9c2153ea7b7340d5aea40c53232d5b95",
         "question": ["What is overall OEE?"],
-        "sql": ["SELECT MEASURE(`oee`) AS oee FROM ${catalog}.${schema}.mv_line_performance"]
+        "sql": ["SELECT MEASURE(`oee`) AS oee FROM YOUR_CATALOG.YOUR_SCHEMA.mv_line_performance"]
       }
     ]
   },
   "data_sources": {
     "tables": [
-      {"identifier": "${catalog}.${schema}.mv_line_performance"},
-      {"identifier": "${catalog}.${schema}.mv_quality"},
-      {"identifier": "${catalog}.${schema}.mv_maintenance"}
+      {"identifier": "YOUR_CATALOG.YOUR_SCHEMA.mv_line_performance"},
+      {"identifier": "YOUR_CATALOG.YOUR_SCHEMA.mv_maintenance"},
+      {"identifier": "YOUR_CATALOG.YOUR_SCHEMA.mv_quality"}
     ]
   },
   "benchmarks": {
     "questions": [
       {
-        "id": "l3-b-01",
+        "id": "e9f6968c5716459f8a95782c3b6add5c",
         "question": ["What is overall OEE?"],
         "answer": [
           {
             "format": "SQL",
-            "content": ["SELECT MEASURE(`oee`) AS oee FROM ${catalog}.${schema}.mv_line_performance"]
+            "content": ["SELECT MEASURE(`oee`) AS oee FROM YOUR_CATALOG.YOUR_SCHEMA.mv_line_performance"]
           }
         ]
       }

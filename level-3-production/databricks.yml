@@ -13,6 +13,9 @@ variables:
   genie_space_id:
     description: Existing agent id after first deploy (optional)
     default: ""
+  workshop_root:
+    description: Workspace folder that contains shared/ (the imported workshop root)
+    default: ""
 
 include:
   - resources/*.yml

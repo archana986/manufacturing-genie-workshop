@@ -1,5 +1,5 @@
 version: 1.1
-source: ${catalog}.${schema}.fct_line_shift
+source: $${catalog}.$${schema}.fct_line_shift
 comment: Quality measures including scrap cost proxy and rolling scrap.
 dimensions:
   - name: line_id

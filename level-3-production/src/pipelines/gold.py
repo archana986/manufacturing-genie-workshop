@@ -16,3 +16,16 @@ def fct_line_shift():
         .withColumn("ideal_cycle_seconds", F.lit(12.0))
         .drop("id")
     )
+
+
+@dlt.table(comment="Work orders used by the maintenance metric view")
+def maintenance_work_orders():
+    return (
+        spark.range(800)
+        .withColumn("wo_id", F.concat(F.lit("WO-"), F.col("id").cast("string")))
+        .withColumn("line_id", F.concat(F.lit("LN-0"), (F.col("id") % 6 + 1).cast("string"), F.lit("-0"), (F.col("id") % 4 + 1).cast("string")))
+        .withColumn("wo_type", F.when(F.col("id") % 4 == 0, F.lit("unplanned")).otherwise(F.lit("planned")))
+        .withColumn("opened_date", F.expr("date_sub(current_date(), CAST(id % 80 AS INT))"))
+        .withColumn("mttr_minutes", (F.lit(15) + (F.col("id") % 240)).cast("int"))
+        .drop("id")
+    )

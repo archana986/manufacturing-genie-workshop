@@ -5,7 +5,7 @@ resources:
       tasks:
         - task_key: deploy_mv
           notebook_task:
-            notebook_path: ./src/notebooks/deploy_metric_views.ipynb
+            notebook_path: ../src/notebooks/deploy_metric_views.ipynb
       parameters:
         - name: catalog
           default: ${var.catalog}
@@ -13,6 +13,8 @@ resources:
           default: ${var.schema}
         - name: warehouse_id
           default: ${var.warehouse_id}
+        - name: repo_root
+          default: ${var.workshop_root}
 
     accuracy_alert:
       name: apex-accuracy-alert
@@ -22,7 +24,7 @@ resources:
       tasks:
         - task_key: check_accuracy
           notebook_task:
-            notebook_path: ./src/notebooks/accuracy_alert.ipynb
+            notebook_path: ../src/notebooks/accuracy_alert.ipynb
       parameters:
         - name: catalog
           default: ${var.catalog}
@@ -30,3 +32,5 @@ resources:
           default: ${var.schema}
         - name: warehouse_id
           default: ${var.warehouse_id}
+        - name: repo_root
+          default: ${var.workshop_root}

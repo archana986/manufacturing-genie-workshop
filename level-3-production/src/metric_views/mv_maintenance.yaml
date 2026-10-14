@@ -1,5 +1,5 @@
 version: 1.1
-source: ${catalog}.${schema}.maintenance_work_orders
+source: $${catalog}.$${schema}.maintenance_work_orders
 comment: Maintenance MTBF and MTTR from work orders.
 dimensions:
   - name: line_id

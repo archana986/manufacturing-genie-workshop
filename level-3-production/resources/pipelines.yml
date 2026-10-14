@@ -6,5 +6,5 @@ resources:
       target: ${var.schema}
       serverless: true
       libraries:
-        - notebook:
-            path: ./src/pipelines/gold.py
+        - file:
+            path: ../src/pipelines/gold.py
