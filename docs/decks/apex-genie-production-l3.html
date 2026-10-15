@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apex Genie Production Lab (L3)</title>
+<link rel="stylesheet" href="deck.css">
+</head>
+<body>
+<section class="slide">
+  <p class="kicker">Level 3 · Full day · Apex Precision Manufacturing</p>
+  <h1 class="hero">Put the manufacturing agent in a production-shaped bundle.</h1>
+  <p class="sub">A standalone lab for platform engineers and CoE teams. Copy <code>level-3-production/</code>, configure targets, and practice promotion.</p>
+  <div class="chips">
+    <span class="chip">DAB</span>
+    <span class="chip">CI</span>
+    <span class="chip">Promotion</span>
+  </div>
+  <div class="kpis">
+    <div class="kpi"><div class="v">Full day</div><div class="l">Lab duration</div></div>
+    <div class="kpi"><div class="v">Dev</div><div class="l">CI deploys this only</div></div>
+    <div class="kpi"><div class="v">95%</div><div class="l">Eval gate</div></div>
+    <div class="kpi"><div class="v">Person</div><div class="l">Staging and prod</div></div>
+  </div>
+  <div class="footer"><span>Apex Genie Production Lab</span><span>1 / 9</span></div>
+</section>
+
+<section class="slide">
+  <p class="kicker">What the bundle owns</p>
+  <h1>The bundle owns every deployable asset.</h1>
+  <div class="cards c3">
+    <div class="card lava"><h2>Gold pipeline</h2><p>Declarative gold tables the agent is allowed to see.</p></div>
+    <div class="card blue"><h2>Metric views</h2><p>OEE, FPY, maintenance measures the Genie space depends on.</p></div>
+    <div class="card green"><h2>Genie space</h2><p>Serialized agent, instructions, and table list.</p></div>
+    <div class="card maroon"><h2>Jobs</h2><p>Post-deploy tests and optional Workbench paths.</p></div>
+    <div class="card oat"><h2>App</h2><p>Ask + Test Lab with <code>source_code_path</code> under the bundle files root.</p></div>
+    <div class="card navy"><h2>Permissions</h2><p>Grants as code. Do not click them in by hand for the class path.</p></div>
+  </div>
+  <div class="footer"><span>Apex Genie Production Lab</span><span>2 / 9</span></div>
+</section>
+
+<section class="slide">
+  <p class="kicker">Deploy order</p>
+  <h1>Deployment order matters because each resource has dependencies.</h1>
+  <img class="hero-img" src="../diagrams/workshop_l3.png" alt="Level 3 flow">
+  <div class="footer"><span>Apex Genie Production Lab</span><span>3 / 9</span></div>
+</section>
+
+<section class="slide">
+  <p class="kicker">Validate first</p>
+  <h1>Strict validation catches broken paths and payloads before deployment.</h1>
+  <div class="cards c4">
+    <div class="card oat"><h2>Resource paths</h2><p>YAML paths resolve relative to <code>resources/</code>.</p></div>
+    <div class="card oat"><h2>File vs notebook</h2><p>Libraries must match the actual source type.</p></div>
+    <div class="card oat"><h2>Sorted tables</h2><p>Genie table lists must be stable and complete.</p></div>
+    <div class="card oat"><h2>32-hex IDs</h2><p>Genie identifiers must be UUIDs, not display names.</p></div>
+  </div>
+  <div class="callout"><code>databricks bundle validate --strict --target dev</code> before any deploy.</div>
+  <div class="footer"><span>Apex Genie Production Lab</span><span>4 / 9</span></div>
+</section>
+
+<section class="slide">
+  <p class="kicker">CI vs promotion</p>
+  <h1>CI deploys dev only. A person promotes staging and production.</h1>
+  <div class="journey">
+    <div class="step"><div class="n">1</div><p>Pull request</p></div>
+    <div class="step"><div class="n">2</div><p>Validate + payload tests</p></div>
+    <div class="step"><div class="n">3</div><p>Merge deploys dev</p></div>
+    <div class="step"><div class="n">4</div><p>Human review</p></div>
+    <div class="step"><div class="n">5</div><p>Staging then prod</p></div>
+  </div>
+  <div class="callout"><span>Lock.</span> GitHub Actions never deploy staging or production. Follow <code>PROMOTION.md</code>.</div>
+  <div class="footer"><span>Apex Genie Production Lab</span><span>5 / 9</span></div>
+</section>
+
+<section class="slide">
+  <p class="kicker">Production gates</p>
+  <h1>Production gates combine tests, governance, and health checks.</h1>
+  <div class="cards c4">
+    <div class="card"><h2>Payload tests</h2><p>Broken DAB nodes fail in CI, not in the plant standup.</p></div>
+    <div class="card"><h2>IQ Scan floor</h2><p>Run the 12-check scan in Workbench before promote.</p></div>
+    <div class="card"><h2>95% eval</h2><p>Benchmark threshold. Below that, do not promote.</p></div>
+    <div class="card"><h2>/health</h2><p>App must answer before you call the deploy done.</p></div>
+  </div>
+  <div class="callout">Row filters and masks are a CoE choice. They do not mix with materialized metric views.</div>
+  <div class="footer"><span>Apex Genie Production Lab</span><span>6 / 9</span></div>
+</section>
+
+<section class="slide">
+  <p class="kicker">Operate</p>
+  <h1>Operations need a runbook, not just a deployment.</h1>
+  <div class="cards c4">
+    <div class="card oat"><h2>Rollback</h2><p>Previous bundle revision plus the serialized Genie file.</p></div>
+    <div class="card oat"><h2>Principals</h2><p>Staging and prod as a service principal, not a personal user.</p></div>
+    <div class="card oat"><h2>New plant</h2><p>Onboard through the model and grants, not a one-off space.</p></div>
+    <div class="card oat"><h2>Incidents</h2><p>Triage with the scorecard and <code>RUNBOOK.md</code>.</p></div>
+  </div>
+  <div class="footer"><span>Apex Genie Production Lab</span><span>7 / 9</span></div>
+</section>
+
+<section class="slide">
+  <p class="kicker">Optional optimizer</p>
+  <h1>Auto-Optimize is optional and stays on staging.</h1>
+  <div class="cards c2">
+    <div class="card green"><h2>Default: human PR</h2><p>A thumbs-down or a failed benchmark becomes a pull request. CI validates. A person promotes.</p></div>
+    <div class="card maroon"><h2>Optional: Auto-Optimize</h2><p>Clone, train / validation / holdout. Keep a change only if the score improves. Roll back if it drops. Needs Prompt Registry (workspace Preview, Beta).</p></div>
+  </div>
+  <div class="callout">MaxGenie is archived. Use Genie Workbench. Do not install a second optimizer. Skip Auto-Optimize if Prompt Registry is off.</div>
+  <div class="footer"><span>Apex Genie Production Lab</span><span>8 / 9</span></div>
+</section>
+
+<section class="slide">
+  <p class="kicker">Close the lab</p>
+  <h1>Fork the bundle, configure targets, and promote deliberately.</h1>
+  <ol class="flow">
+    <li>Copy <code>level-3-production/</code> as the project root.</li>
+    <li>Set catalog, schema, warehouse, parent path, and workshop root.</li>
+    <li>Replace placeholder catalog.schema in the Genie export.</li>
+    <li>Run <code>bundle validate --strict</code>.</li>
+    <li>Deploy gold, then metric views, then Genie, then the app.</li>
+  </ol>
+  <div class="callout">You leave with a forkable bundle and a human promotion path. Staging and prod stay a person.</div>
+  <div class="footer"><span>Apex Genie Production Lab</span><span>9 / 9</span></div>
+</section>
+</body>
+</html>

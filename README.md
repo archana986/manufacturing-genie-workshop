@@ -79,7 +79,7 @@ Run in order, on serverless:
 4. `level-1-foundations/03_benchmarks`
 5. `level-1-foundations/04_basic_tests`
 
-Facilitator click-path: `level-1-foundations/FACILITATOR_GUIDE.md`.
+Facilitator click-path: `level-1-foundations/FACILITATOR_GUIDE.md`. Facilitator deck: [`docs/decks/apex-genie-foundations-l1.pdf`](docs/decks/apex-genie-foundations-l1.pdf).
 
 ### 3. Level 2 (4 hours)
 
@@ -91,7 +91,7 @@ Editable source: [`docs/diagrams/workshop_l2.svg`](docs/diagrams/workshop_l2.svg
 
 Same widgets. Use a schema for Level 2 (example: `<catalog>.<schema_l2>`). Run `10_complex_data` through `14_performance_tuning`, then the Workbench IQ Scan lab. Optional: vibe-code the Ask + Test Lab app from `level-2-performance-lab/vibe/PROMPT.md`.
 
-Default telemetry is 10 million rows. Set widget **telemetry_rows** to `50000000` only if you have time and warehouse capacity.
+Default telemetry is 10 million rows. Set widget **telemetry_rows** to `50000000` only if you have time and warehouse capacity. Facilitator deck: [`docs/decks/apex-genie-performance-l2.pdf`](docs/decks/apex-genie-performance-l2.pdf).
 
 ### 4. Level 3 (full day)
 
@@ -107,6 +107,8 @@ Editable source: [`docs/diagrams/workshop_l3.svg`](docs/diagrams/workshop_l3.svg
 4. Open a PR. GitHub Actions run `bundle validate` and the payload tests. Run the IQ Scan floor in Workbench before you promote (see `PROMOTION.md`).
 5. Merge deploys **dev** only.
 6. Follow `level-3-production/PROMOTION.md` for staging and prod.
+
+Facilitator deck: [`docs/decks/apex-genie-production-l3.pdf`](docs/decks/apex-genie-production-l3.pdf).
 
 ## Limitations
 
@@ -139,6 +141,7 @@ Editable source: [`docs/diagrams/workshop_l3.svg`](docs/diagrams/workshop_l3.svg
 | `level-3-production/` | Bundle, CI for dev, promotion runbook |
 | `cleanup/` | Tear down workshop objects |
 | `docs/diagrams/` | Architecture PNG and editable SVG for each level |
+| `docs/decks/` | Facilitator PDFs for L1, L2, and L3 |
 
 ## License
 

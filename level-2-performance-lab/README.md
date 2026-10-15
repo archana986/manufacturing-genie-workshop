@@ -21,6 +21,10 @@ Set `telemetry_rows` to `50000000` only if you have time and a Medium warehouse.
 
 Not in this level. IQ Scan and Quick Fix are required. Auto-Optimize is an optional Level 3 module.
 
+## Facilitator deck
+
+[Apex Genie Performance Lab (PDF)](../docs/decks/apex-genie-performance-l2.pdf) · 9 slides · 4 hours.
+
 ## Files
 
 | File | Use |

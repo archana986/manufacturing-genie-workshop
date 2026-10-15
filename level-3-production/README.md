@@ -27,6 +27,10 @@ IQ Scan and Quick Fix from Level 2 do not require Prompt Registry.
 
 MaxGenie was an earlier Databricks Solutions skill for the same pattern. Databricks archived it. Use Workbench, not a second optimizer.
 
+## Facilitator deck
+
+[Apex Genie Production Lab (PDF)](../docs/decks/apex-genie-production-l3.pdf) · 9 slides · full day.
+
 ## Files
 
 | File | Use |

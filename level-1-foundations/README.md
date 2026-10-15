@@ -18,6 +18,10 @@ A curated Apex Precision Manufacturing agent on seven tables, 10 benchmarks, and
 
 Set widgets to your catalog, schema, and warehouse id. Do not commit those values.
 
+## Facilitator deck
+
+[Apex Genie Foundations (PDF)](../docs/decks/apex-genie-foundations-l1.pdf) · 8 slides · 2 hours.
+
 ## Files
 
 | File | Use |

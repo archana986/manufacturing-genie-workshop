@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apex Genie Performance Lab (L2)</title>
+<link rel="stylesheet" href="deck.css">
+</head>
+<body>
+<section class="slide">
+  <p class="kicker">Level 2 · 4 hours · Apex Precision Manufacturing</p>
+  <h1 class="hero">Measure a manufacturing Genie agent before you trust it.</h1>
+  <p class="sub">A standalone lab for data engineers and solution architects. You compare table joins to certified measures, then score accuracy and latency.</p>
+  <div class="chips">
+    <span class="chip">10M telemetry</span>
+    <span class="chip">Metric views</span>
+    <span class="chip">Scorecard</span>
+  </div>
+  <div class="kpis">
+    <div class="kpi"><div class="v">4h</div><div class="l">Lab duration</div></div>
+    <div class="kpi"><div class="v">10M</div><div class="l">Default telemetry rows</div></div>
+    <div class="kpi"><div class="v">25</div><div class="l">Questions per agent</div></div>
+    <div class="kpi"><div class="v">12</div><div class="l">IQ Scan checks</div></div>
+  </div>
+  <div class="footer"><span>Apex Genie Performance Lab</span><span>1 / 9</span></div>
+</section>
+
+<section class="slide">
+  <p class="kicker">Lab journey</p>
+  <h1>This lab turns a curated agent into a measured system.</h1>
+  <div class="journey">
+    <div class="step"><div class="n">1</div><p>Complex data</p></div>
+    <div class="step"><div class="n">2</div><p>Metric views</p></div>
+    <div class="step"><div class="n">3</div><p>A vs B agents</p></div>
+    <div class="step"><div class="n">4</div><p>Scorecard</p></div>
+    <div class="step"><div class="n">5</div><p>Tune layout</p></div>
+    <div class="step"><div class="n">6</div><p>IQ Scan</p></div>
+    <div class="step"><div class="n">7</div><p>Ask + Test Lab</p></div>
+  </div>
+  <div class="callout"><span>Order.</span> <code>10_complex_data</code> → <code>11_metric_views</code> → <code>12_agent_v2</code> → <code>13_accuracy_and_latency</code> → <code>14_performance_tuning</code> → Workbench → app.</div>
+  <div class="footer"><span>Apex Genie Performance Lab</span><span>2 / 9</span></div>
+</section>
+
+<section class="slide">
+  <p class="kicker">Scale the model</p>
+  <h1>The Apex model adds production-scale grains and relationships.</h1>
+  <div class="cards c4">
+    <div class="card lava"><h2>Telemetry</h2><p>10 million rows by default. Optional 50 million if the warehouse can take it.</p></div>
+    <div class="card blue"><h2>SCD2 equipment</h2><p>Line identity changes over time. Joins must pick the right version.</p></div>
+    <div class="card green"><h2>BOM and suppliers</h2><p>Part explosion and vendor grain. Easy to double-count.</p></div>
+    <div class="card maroon"><h2>Work orders</h2><p>Maintenance and production share keys. Grain is the trap.</p></div>
+  </div>
+  <div class="footer"><span>Apex Genie Performance Lab</span><span>3 / 9</span></div>
+</section>
+
+<section class="slide">
+  <p class="kicker">Certified measures</p>
+  <h1>Metric views make the business grain explicit.</h1>
+  <div class="cards c3">
+    <div class="card"><h2>OEE</h2><p>Availability × performance × quality. Always a ratio of sums, never an average of percents.</p></div>
+    <div class="card"><h2>FPY</h2><p>First-pass yield at the certified grain. Do not average line percents.</p></div>
+    <div class="card"><h2>Maintenance</h2><p>MTBF and related measures from work orders, not ad-hoc SQL in the agent.</p></div>
+  </div>
+  <div class="callout"><span>Constraint.</span> Materialized metric views and entity matching cannot combine with row filters, masks, or ABAC.</div>
+  <div class="footer"><span>Apex Genie Performance Lab</span><span>4 / 9</span></div>
+</section>
+
+<section class="slide">
+  <p class="kicker">A versus B</p>
+  <h1>Agent A joins tables. Agent B calls certified measures.</h1>
+  <img class="hero-img" src="../diagrams/workshop_l2.png" alt="Level 2 flow">
+  <div class="footer"><span>Apex Genie Performance Lab</span><span>5 / 9</span></div>
+</section>
+
+<section class="slide">
+  <p class="kicker">Scorecard</p>
+  <h1>Twenty-five questions expose accuracy and latency together.</h1>
+  <div class="kpis">
+    <div class="kpi"><div class="v">25</div><div class="l">Questions per agent</div></div>
+    <div class="kpi"><div class="v">PASS/FAIL</div><div class="l">Exact match only</div></div>
+    <div class="kpi"><div class="v">p50</div><div class="l">Median latency</div></div>
+    <div class="kpi"><div class="v">p95</div><div class="l">Tail latency</div></div>
+  </div>
+  <div class="callout" style="margin-top:28px">TIMEOUT is FAIL. Do not tune the warehouse until both agents have a scorecard.</div>
+  <div class="footer"><span>Apex Genie Performance Lab</span><span>6 / 9</span></div>
+</section>
+
+<section class="slide">
+  <p class="kicker">Tune after evidence</p>
+  <h1>Tune data layout and compute only after the scorecard exists.</h1>
+  <div class="cards c4">
+    <div class="card oat"><h2>Liquid clustering</h2><p>Cluster on the join and filter keys the scorecard actually uses.</p></div>
+    <div class="card oat"><h2>Warehouse size</h2><p>Move size only if p95 is the problem, not accuracy.</p></div>
+    <div class="card oat"><h2>Query shape</h2><p>Fix measures and grain before you add cache folklore.</p></div>
+    <div class="card oat"><h2>Rerun evidence</h2><p>Same 25 questions. Keep the before and after scorecard.</p></div>
+  </div>
+  <div class="footer"><span>Apex Genie Performance Lab</span><span>7 / 9</span></div>
+</section>
+
+<section class="slide">
+  <p class="kicker">Workbench</p>
+  <h1>IQ Scan finds gaps. Quick Fix proposes a patch. A human applies it.</h1>
+  <div class="cards c3">
+    <div class="card lava"><h2>IQ Scan</h2><p>12 checks on instructions, examples, joins, and benchmarks. Deterministic. No Prompt Registry.</p></div>
+    <div class="card blue"><h2>Quick Fix</h2><p>Suggested patches for failing checks. You read them. You apply them.</p></div>
+    <div class="card green"><h2>Human apply</h2><p>Rescan, then rerun the 25-question scorecard. Nothing writes itself into prod.</p></div>
+  </div>
+  <div class="callout">Auto-Optimize is not part of Level 2. Skip any Prompt Registry path in this room.</div>
+  <div class="footer"><span>Apex Genie Performance Lab</span><span>8 / 9</span></div>
+</section>
+
+<section class="slide">
+  <p class="kicker">Close the lab</p>
+  <h1>Take the measured agent into the Ask + Test Lab.</h1>
+  <div class="cards c2">
+    <div class="card navy"><h2>Reference app</h2><p>Deploy <code>level-2-performance-lab/app/</code> or vibe-code from <code>vibe/PROMPT.md</code>.</p></div>
+    <div class="card teal"><h2>Throttle</h2><p>Conversation API is about 5 questions per minute. The app must throttle or you will see false TIMEOUTs.</p></div>
+  </div>
+  <div class="callout">This lab ends when the scorecard and the Test Lab agree. You do not need another lab to finish the day.</div>
+  <div class="footer"><span>Apex Genie Performance Lab</span><span>9 / 9</span></div>
+</section>
+</body>
+</html>
